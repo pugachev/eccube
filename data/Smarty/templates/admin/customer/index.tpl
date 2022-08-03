@@ -69,6 +69,14 @@
                 <th>会員状態</th>
                 <td colspan="3"><!--{html_checkboxes name="search_status" options=$arrStatus separator="&nbsp;" selected=$arrForm.search_status.value}--></td>
             </tr>
+            <tr>
+                <th>美人度</th>
+                <td colspan="3"><!--{html_checkboxes name="search_bijin" options=$arrBijin separator="&nbsp;" selected=$arrForm.search_bijin.value}--></td>
+            </tr>
+            <tr>
+                <th>現在結婚していますか？</th>
+                <td colspan="3"><!--{html_checkboxes name="search_married" options=$arrMarried separator="&nbsp;" selected=$arrForm.search_married.value}--></td>
+            </tr>
         </table>
         <div class="btn">
             <p class="page_rows">検索結果表示件数

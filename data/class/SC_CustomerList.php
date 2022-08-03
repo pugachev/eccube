@@ -331,6 +331,24 @@ class SC_CustomerList extends SC_SelectSql_Ex
             }
         }
 
+        // 美人度
+        if (!isset($this->arrSql['search_bijin'])) $this->arrSql['search_bijin'] = '';
+        if (is_array($this->arrSql['search_bijin'])) {
+            $arrStatusVal = $this->setItemTerm($this->arrSql['search_bijin'], 'bijin_id');
+            foreach ($arrStatusVal as $data) {
+                $this->arrVal[] = $data;
+            }
+        }
+
+        // 現在結婚していますか？
+        if (!isset($this->arrSql['search_married'])) $this->arrSql['search_married'] = '';
+        if (is_array($this->arrSql['search_married'])) {
+            $arrStatusVal = $this->setItemTerm($this->arrSql['search_married'], 'married_id');
+            foreach ($arrStatusVal as $data) {
+                $this->arrVal[] = $data;
+            }
+        }
+
         $this->setOrder('customer_id DESC');
     }
 
