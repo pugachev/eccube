@@ -632,6 +632,8 @@ class SC_Helper_Customer
         $objFormParam->addParam('カテゴリ', 'search_category_id', INT_LEN, 'n', array('NUM_CHECK', 'MAX_LENGTH_CHECK'));
         $objFormParam->addParam('性別', 'search_sex', INT_LEN, 'n', array('MAX_LENGTH_CHECK'));
         $objFormParam->addParam('会員状態', 'search_status', INT_LEN, 'n', array('MAX_LENGTH_CHECK'));
+        $objFormParam->addParam('美人度', 'search_bijin', INT_LEN, 'n', array('MAX_LENGTH_CHECK'));
+        $objFormParam->addParam('現在結婚していますか？', 'search_married', INT_LEN, 'n', array('MAX_LENGTH_CHECK'));
         $objFormParam->addParam('職業', 'search_job', INT_LEN, 'n', array('MAX_LENGTH_CHECK'));
     }
 
