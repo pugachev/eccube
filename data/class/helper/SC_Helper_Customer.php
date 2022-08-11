@@ -472,6 +472,14 @@ class SC_Helper_Customer
         $objFormParam->addParam('趣味', 'hobby_id', INT_LEN, 'n', array('NUM_CHECK', 'MAX_LENGTH_CHECK'));
         $objFormParam->addParam('美人', 'bijin_id', INT_LEN, 'n', array('NUM_CHECK', 'MAX_LENGTH_CHECK'));
         $objFormParam->addParam('現在結婚していますか？', 'married_id', INT_LEN, 'n', array('NUM_CHECK', 'MAX_LENGTH_CHECK'));
+        $objFormParam->addParam('filepath', 'filepath', '', '', array());
+        $objFormParam->addParam('main_list_image', 'main_list_image', '', '', array());
+        $objFormParam->addParam('save_main_list_image', 'save_main_list_image', '', '', array());
+        $objFormParam->addParam('save_main_image', 'save_main_image', '', '', array());
+        $objFormParam->addParam('save_main_large_image', 'save_main_large_image', '', '', array());
+        $objFormParam->addParam('temp_main_list_image', 'temp_main_list_image', '', '', array());
+        $objFormParam->addParam('temp_main_image', 'temp_main_image', '', '', array());
+        $objFormParam->addParam('temp_main_large_image', 'temp_main_large_image', '', '', array());
     }
 
     /**
@@ -794,4 +802,22 @@ class SC_Helper_Customer
     
         return $results;
     }
+
+    public function getFilePath($customerIds)
+    {
+        if (empty($customerIds)) {
+            return array();
+        }
+        $objQuery =& SC_Query_Ex::getSingletonInstance();
+        $cols = 'filepath';
+        $from = 'dtb_customer';
+        $where = 'del_flg = 0 AND customer_id IN (' . SC_Utils_Ex::repeatStrWithSeparator('?', count($customerIds)) . ')';
+        $filepath = $objQuery->select($cols, $from, $where, $customerIds);
+        $results = array();
+        foreach ($filepath as $val) {
+            $results['filepath'] = $val['filepath'];
+        }
+    
+        return $results;
+    }   
 }

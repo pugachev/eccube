@@ -37,6 +37,7 @@ function func_return(){
 <form name="form1" id="form1" method="post" action="?">
     <input type="hidden" name="<!--{$smarty.const.TRANSACTION_ID_NAME}-->" value="<!--{$transactionid}-->" />
     <input type="hidden" name="mode" value="complete" />
+    <input type="hidden" name="filepath" value="<!--{$filepath|h}-->" />
 
     <!--{foreach from=$arrForm key=key item=item}-->
         <!--{if !is_array($item) && $key ne "mode" && $key ne "subm" && $key ne $smarty.const.TRANSACTION_ID_NAME}-->
@@ -191,6 +192,14 @@ function func_return(){
         <tr>
             <th>現在結婚していますか？</th>
             <td><!--{$arrBijin[$arrForm.married_id]|h}--></td>
+        </tr>
+        <tr>
+            <th>一覧-メイン画像</th>
+            <td>
+                <!--{if $filepath != ""}-->
+                    <img src="<!--{$filepath}-->" /><br />
+                <!--{/if}-->
+            </td>
         </tr>
         </table>
         <div class="btn-area">
