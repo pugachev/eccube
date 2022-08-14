@@ -118,7 +118,7 @@ class LC_Page_Admin_Customer_Edit extends LC_Page_Admin_Ex
                 // ファイルを一時ディレクトリにアップロード
                 $this->arrErr[$this->arrForm['image_key']] = $objUpFile->makeTempFile($this->arrForm['image_key'], false);
                 // 入力画面表示設定
-                $this->arrForm = $this->lfSetViewParam_InputPage($objUpFile, $objDownFile, $this->arrForm);
+                $this->arrForm = $this->lfSetViewParam_InputPage($objUpFile, $this->arrForm);
                 break;
             case 'confirm':
                 // パラメーター処理
