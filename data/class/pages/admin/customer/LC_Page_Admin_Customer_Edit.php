@@ -99,8 +99,47 @@ class LC_Page_Admin_Customer_Edit extends LC_Page_Admin_Ex
         // 検索引き継ぎ用パラメーター管理クラス
         $objFormSearchParam = new SC_FormParam_Ex();
 
+        // mtake add 
+        // アップロードファイル情報の初期化
+        $objUpFile = new SC_UploadFile_Ex(IMAGE_TEMP_REALDIR, IMAGE_SAVE_REALDIR);
+        $this->lfInitFile($objUpFile);
+        $objUpFile->setHiddenFileList($_POST);
+
         // モードによる処理切り替え
         switch ($this->getMode()) {
+            // 画像のアップロード
+            case 'upload_image':
+                // パラメーター初期化
+                // mtake add 理論的にはSC_Helper_CustomerのsfCustomerRegisterParamを通るので、そこでパラメータの登録は完了しているはず
+                $this->lfInitParam($objFormParam);
+                $objFormParam->setParam($_POST);
+                $objFormParam->convParam();
+                $this->arrForm = $objFormParam->getHashArray();
+                // ファイルを一時ディレクトリにアップロード
+                $this->arrErr[$this->arrForm['image_key']] = $objUpFile->makeTempFile($this->arrForm['image_key'], false);
+                // 入力画面表示設定
+                $this->arrForm = $this->lfSetViewParam_InputPage($objUpFile, $objDownFile, $this->arrForm);
+                break;
+            case 'confirm':
+                // パラメーター処理
+                $this->lfInitParam($objFormParam);
+                $objFormParam->setParam($_POST);
+                $objFormParam->convParam();
+                // 入力パラメーターチェック
+                $this->arrErr = $this->lfCheckError($objFormParam);
+                $arrForm = $objFormParam->getHashArray();
+                $this->arrForm = $this->lfSetViewParam_ConfirmPage($objUpFile,$arrForm);
+                // 検索引き継ぎ用パラメーター処理
+                $this->lfInitSearchParam($objFormSearchParam);
+                $objFormSearchParam->setParam($objFormParam->getValue('search_data'));
+                $this->arrSearchErr = $this->lfCheckErrorSearchParam($objFormSearchParam);
+                $this->arrSearchData = $objFormSearchParam->getSearchArray();
+                if (!SC_Utils_Ex::isBlank($this->arrErr) or !SC_Utils_Ex::isBlank($this->arrSearchErr)) {
+                    return;
+                }
+                // 確認画面テンプレートに切り替え
+                $this->tpl_mainpage = 'customer/edit_confirm.tpl';
+                break;
             case 'edit_search':
                 // 検索引き継ぎ用パラメーター処理
                 $this->lfInitSearchParam($objFormSearchParam);
@@ -117,25 +156,6 @@ class LC_Page_Admin_Customer_Edit extends LC_Page_Admin_Ex
                 $this->arrPagenavi = $this->objNavi->arrPagenavi;
                 $this->arrPagenavi['mode'] = 'return';
                 $this->tpl_pageno = '0';
-                break;
-            case 'confirm':
-                // パラメーター処理
-                $this->lfInitParam($objFormParam);
-                $objFormParam->setParam($_POST);
-                $objFormParam->convParam();
-                // 入力パラメーターチェック
-                $this->arrErr = $this->lfCheckError($objFormParam);
-                $this->arrForm = $objFormParam->getHashArray();
-                // 検索引き継ぎ用パラメーター処理
-                $this->lfInitSearchParam($objFormSearchParam);
-                $objFormSearchParam->setParam($objFormParam->getValue('search_data'));
-                $this->arrSearchErr = $this->lfCheckErrorSearchParam($objFormSearchParam);
-                $this->arrSearchData = $objFormSearchParam->getSearchArray();
-                if (!SC_Utils_Ex::isBlank($this->arrErr) or !SC_Utils_Ex::isBlank($this->arrSearchErr)) {
-                    return;
-                }
-                // 確認画面テンプレートに切り替え
-                $this->tpl_mainpage = 'customer/edit_confirm.tpl';
                 break;
             case 'return':
                 // パラメーター処理
@@ -209,11 +229,13 @@ class LC_Page_Admin_Customer_Edit extends LC_Page_Admin_Ex
     public function lfInitParam(&$objFormParam)
     {
         // 会員項目のパラメーター取得
-        SC_Helper_Customer_Ex::sfCustomerEntryParam($objFormParam, true);
+        SC_Helper_Customer_Ex::sfCustomerEntryParam($objFormParam, true);//mtake 
         // 検索結果一覧画面への戻り用パラメーター
         $objFormParam->addParam('検索用データ', 'search_data', '', '', array(), '', false);
         // 会員購入履歴ページング用
         $objFormParam->addParam('', 'search_pageno', INT_LEN, 'n', array('NUM_CHECK', 'MAX_LENGTH_CHECK'), '', false);
+
+
     }
 
     /**
@@ -339,5 +361,78 @@ class LC_Page_Admin_Customer_Edit extends LC_Page_Admin_Ex
         $arrPurchaseHistory = $objQuery->select('*', $table, $where, $arrVal);
 
         return array($linemax, $arrPurchaseHistory, $objNavi);
+    }
+
+    /**
+     * パラメーター情報の初期化
+     * - 画像ファイルアップロードモード
+     *
+     * @param  SC_FormParam_Ex $objFormParam SC_FormParamインスタンス
+     * @return void
+     */
+    public function lfInitFormParam_UploadImage(&$objFormParam)
+    {
+        //mtake add このimage_keyで「main_large_image」か「main_image」か「sub_large_image」を判定するっぽい
+        //そもそもこの変数がくるのは画像up/dnの時だけなので、switch文でこの場合のみobjFormParamに追加しいてる
+        //ちなみにここでは「main_image」を決め打ちで使用するつもりです！
+        //普段は使わないからいる時だけ使うと。またどこかでfor文をぐるぐる回してたのも、この三種類のどれかを判定したんだと思う
+        $objFormParam->addParam('image_key', 'image_key', '', '', array());
+    }
+
+    /**
+     * アップロードファイルパラメーター情報の初期化
+     * - 画像ファイル用
+     *
+     * @param  SC_UploadFile_Ex $objUpFile SC_UploadFileインスタンス
+     * @return void
+     */
+    public function lfInitFile(&$objUpFile)
+    {
+        // mtake add ここは取扱う画像の種類やサイズの情報をセットしている模様
+        $objUpFile->addFile('詳細-メイン画像', 'main_image', array('jpg', 'gif', 'png'), IMAGE_SIZE, false, NORMAL_IMAGE_WIDTH, NORMAL_IMAGE_HEIGHT);
+    }
+
+    /**
+     * 表示用フォームパラメーター取得
+     * - 入力画面
+     *
+     * @param  SC_UploadFile_Ex $objUpFile   SC_UploadFileインスタンス
+     * @param  SC_UploadFile_Ex $objDownFile SC_UploadFileインスタンス
+     * @param  array  $arrForm     フォーム入力パラメーター配列
+     * @return array  表示用フォームパラメーター配列
+     */
+    public function lfSetViewParam_InputPage(&$objUpFile,&$arrForm)
+    {
+        // アップロードファイル情報取得(Hidden用)
+        $arrHidden = $objUpFile->getHiddenFileList();
+        // mtake add ようやく理解！確認画面では全てがlabel表示となるため、そのままだとPOST対象外となる。
+        // なので編集画面で入力した内容をすべてhiddenにしまい込む必要がある。そしてその後に確認画面へ。
+        // 確認画面では入力ボックスがないく、画面表示上はすべてlabelでPOST対象外です。なのであらかじめ
+        // hiddenに隠し持った値をPOSTするってことですね。
+        $arrForm['arrHidden'] = (array) $arrHidden;
+
+        // 画像ファイル表示用データ取得
+        $arrForm['arrFile'] = $objUpFile->getFormFileList();
+
+        // var_dump($arrForm['arrFile']);
+        // die();
+
+        return $arrForm;
+    }
+
+    /**
+     * 表示用フォームパラメーター取得
+     * - 確認画面
+     *
+     * @param  SC_UploadFile_Ex $objUpFile   SC_UploadFileインスタンス
+     * @param  SC_UploadFile_Ex $objDownFile SC_UploadFileインスタンス
+     * @param  array  $arrForm     フォーム入力パラメーター配列
+     * @return array  表示用フォームパラメーター配列
+     */
+    public function lfSetViewParam_ConfirmPage(&$objUpFile,&$arrForm)
+    {
+        // 画像ファイル用データ取得
+        $arrForm['arrFile'] = $objUpFile->getFormFileList();
+        return $arrForm;
     }
 }

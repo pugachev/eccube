@@ -49,11 +49,17 @@
     <!--{/foreach}-->
 </form>
 
-<form name="form1" id="form1" method="post" action="?" autocomplete="off">
+<form name="form1" id="form1" method="post" action="?" autocomplete="off"  enctype="multipart/form-data">
     <input type="hidden" name="<!--{$smarty.const.TRANSACTION_ID_NAME}-->" value="<!--{$transactionid}-->" />
     <input type="hidden" name="mode" value="confirm" />
     <input type="hidden" name="customer_id" value="<!--{$arrForm.customer_id|h}-->" />
-
+    <input type="hidden" name="image_key" value="main_image" />
+    <!--{foreach key=key item=item from=$arrForm.arrHidden}-->
+        <input type="hidden" name="<!--{$key}-->" value="<!--{$item|h}-->" />
+    <!--{/foreach}-->
+    <!--{foreach key=key item=item from=$arrForm.arrFile}-->
+        <input type="hidden" name="<!--{$key}-->" value="<!--{$item|h}-->" />
+    <!--{/foreach}-->
     <!-- 検索条件の保持 -->
     <!--{foreach from=$arrSearchData key="key" item="item"}-->
         <!--{if $key ne "customer_id" && $key ne "mode" && $key ne "edit_customer_id" && $key ne $smarty.const.TRANSACTION_ID_NAME}-->
@@ -66,7 +72,6 @@
             <!--{/if}-->
         <!--{/if}-->
     <!--{/foreach}-->
-
     <div id="customer" class="contents-main">
         <table class="form">
             <!--{if $arrForm.customer_id}-->
@@ -306,6 +311,18 @@
                     <span <!--{if $arrErr.dm_id != ""}--><!--{sfSetErrorStyle}--><!--{/if}-->>
                         <!--{html_radios name="married_id" options=$arrMarried separator="&nbsp;" selected=$arrForm.married_id}-->
                     </span>
+                </td>
+            </tr>
+            <tr>
+                <!--{assign var=key value="main_image"}-->
+                <th>会員様画像<br />[<!--{$smarty.const.NORMAL_IMAGE_WIDTH}-->×<!--{$smarty.const.NORMAL_IMAGE_HEIGHT}-->]</th>
+                <td>
+                    <span class="attention"><!--{$arrErr[$key]}--></span>
+                    <!--{if $arrForm.arrFile[$key].filepath != ""}-->
+                    <img src="<!--{$arrForm.arrFile[$key].filepath}-->" alt="<!--{$arrForm.name|h}-->" /><br />
+                    <!--{/if}-->
+                    <input type="file" name="main_image" size="40" style="<!--{$arrErr[$key]|sfGetErrorColor}-->" />
+                    <a class="btn-normal" href="javascript:;" name="btn" onclick="eccube.setModeAndSubmit('upload_image', 'image_key', '<!--{$key}-->'); return false;">アップロード</a>
                 </td>
             </tr>
         </table>

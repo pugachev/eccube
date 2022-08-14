@@ -274,6 +274,8 @@ class SC_Helper_Customer
         $arrHobby = SC_Helper_Customer_Ex::getHobby(array($customer_id));
         $arrForm['hobby_id'] = $arrHobby[$customer_id];
 
+        // mtake add 
+        $arrForm['arrFile']['main_image']['filepath'] = '/eccube/html/upload/temp_image/'.$ret[0]['temp_main_image'];
         return $arrForm;
     }
 
@@ -472,6 +474,13 @@ class SC_Helper_Customer
         $objFormParam->addParam('趣味', 'hobby_id', INT_LEN, 'n', array('NUM_CHECK', 'MAX_LENGTH_CHECK'));
         $objFormParam->addParam('美人', 'bijin_id', INT_LEN, 'n', array('NUM_CHECK', 'MAX_LENGTH_CHECK'));
         $objFormParam->addParam('現在結婚していますか？', 'married_id', INT_LEN, 'n', array('NUM_CHECK', 'MAX_LENGTH_CHECK'));
+
+        //mtake add 会員登録の場合はここに記載するみたい 画像のuploadはここを使いますよと。
+        $objFormParam->addParam('image_key', 'image_key', '', '', array());
+        // $objFormParam->addParam('filepath', 'filepath', '', '', array());
+        $objFormParam->addParam('main_image', 'main_image', '', '', array());
+        $objFormParam->addParam('save_main_image', 'save_main_image', '', '', array());
+        $objFormParam->addParam('temp_main_image', 'temp_main_image', '', '', array());
     }
 
     /**

@@ -465,7 +465,7 @@ define('HOOK_POINT_PROCESS', "LC_Page_process");
 /** プラグインのロード可否フラグ) */
 define('PLUGIN_ACTIVATE_FLAG', true);
 /** SMARTYコンパイルモード */
-define('SMARTY_FORCE_COMPILE_MODE', false);
+define('SMARTY_FORCE_COMPILE_MODE', true);
 /** ログイン失敗時の遅延時間(秒)(ブルートフォースアタック対策) */
 define('LOGIN_RETRY_INTERVAL', 0);
 /** MYページ：ご注文状況表示フラグ */
@@ -488,3 +488,4 @@ define('PENDING_ORDER_CANCEL_FLAG', true);
 define('API_ENABLE_FLAG', false);
 /** UTF-8依存文字が入力された際に表示する文字(Unicode値の整数 デフォルト: ?) */
 define('SUBSTITUTE_CHAR', 63);
+

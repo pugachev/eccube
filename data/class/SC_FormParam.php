@@ -113,6 +113,8 @@ class SC_FormParam
     {
         if (!is_array($arrVal)) return;
         if (!$seq) {
+            // mtake add 第二引数を未指定なのでここを通るはず
+            // keyとvalで格納されていいくはず
             foreach ($arrVal as $key => $val) {
                 $this->setValue($key, $val);
             }
