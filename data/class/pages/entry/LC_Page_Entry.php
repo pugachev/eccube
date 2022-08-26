@@ -53,6 +53,12 @@ class LC_Page_Entry extends LC_Page_Ex
         $this->arrMonth     = $objDate->getMonth(true);
         $this->arrDay       = $objDate->getDay(true);
 
+
+        // STEP2：会員カスタマイズ 項目追加
+        $this->arrHouse = $masterData->getMasterData('mtb_house');
+        $this->arrDm = $masterData->getMasterData('mtb_direct_mail');
+        $this->arrHobby = $masterData->getMasterData('mtb_hobby');
+
         $this->httpCacheControl('nocache');
     }
 

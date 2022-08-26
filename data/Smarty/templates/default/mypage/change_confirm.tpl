@@ -35,8 +35,12 @@
             <input type="hidden" name="mode" value="complete" />
             <input type="hidden" name="customer_id" value="<!--{$arrForm.customer_id.value|h}-->" />
             <!--{foreach from=$arrForm key=key item=item}-->
-                <!--{if $key ne "mode" && $key ne "subm"}-->
-                <input type="hidden" name="<!--{$key|h}-->" value="<!--{$item.value|h}-->" />
+                <!--{if $key == 'hobby_id'}-->
+                    <!--{foreach from=$item.value item=hobbyVal}-->
+                        <input type="hidden" name="<!--{$key}-->[]" value="<!--{$hobbyVal|h}-->" />
+                    <!--{/foreach}-->
+                <!--{else}-->
+                    <input type="hidden" name="<!--{$key|h}-->" value="<!--{$item.value|h}-->" />
                 <!--{/if}-->
             <!--{/foreach}-->
             <table summary=" " class="delivname">

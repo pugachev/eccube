@@ -60,8 +60,8 @@ class LC_Page_Admin_Products_Product extends LC_Page_Admin_Products_Ex
 
         // STEP1：商品カスタマイズ 項目追加
         $this->arrDeliveryType = $masterData->getMasterData('mtb_delivery_type');//配送種別
-        $this->arrGift = $masterData->getMasterData('mtb_gift');//保証期間
-        $this->arrWarrantyPeriod = $masterData->getMasterData('mtb_warranty_period');//ギフト対応
+        $this->arrGift = $masterData->getMasterData('mtb_gift');//ギフト対応
+        $this->arrWarrantyPeriod = $masterData->getMasterData('mtb_warranty_period');//保証期間
     }
 
     /**

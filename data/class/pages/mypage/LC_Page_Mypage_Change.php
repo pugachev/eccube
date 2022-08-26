@@ -57,6 +57,11 @@ class LC_Page_Mypage_Change extends LC_Page_AbstractMypage_Ex
         $this->arrYear      = $objDate->getYear('', START_BIRTH_YEAR, '');
         $this->arrMonth     = $objDate->getMonth(true);
         $this->arrDay       = $objDate->getDay(true);
+
+        // STEP2：会員カスタマイズ 項目追加
+        $this->arrHouse = $masterData->getMasterData('mtb_house');
+        $this->arrDm = $masterData->getMasterData('mtb_direct_mail');
+        $this->arrHobby = $masterData->getMasterData('mtb_hobby');
     }
 
     /**

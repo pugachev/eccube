@@ -164,44 +164,44 @@ function func_return(){
                 <td><!--{$arrForm.point|default:"0"|h}--> pt</td>
             </tr>
             <tr>
-            <th>ニックネーム</th>
-            <td><!--{$arrForm.nick_name|h}--></td>
-        </tr>
-        <tr>
-            <th>住まい</th>
-            <td><!--{$arrHouse[$arrForm.house_id]|default:"未登録"|h}--></td>
-        </tr>
-        <tr>
-            <th>ダイレクトメール</th>
-            <td><!--{$arrDm[$arrForm.dm_id]|h}--></td>
-        </tr>
-        <tr>
-            <th>趣味</th>
-            <td>
-                <!--{foreach from=$arrForm.hobby_id item=hobby}-->
-                    <!--{if $hobby != ""}-->
-                        <!--{$arrHobby[$hobby]|h}-->
+                <th>ニックネーム</th>
+                <td><!--{$arrForm.nick_name|h}--></td>
+            </tr>
+            <tr>
+                <th>住まい</th>
+                <td><!--{$arrHouse[$arrForm.house_id]|default:"未登録"|h}--></td>
+            </tr>
+            <tr>
+                <th>ダイレクトメール</th>
+                <td><!--{$arrDm[$arrForm.dm_id]|h}--></td>
+            </tr>
+            <tr>
+                <th>趣味</th>
+                <td>
+                    <!--{foreach from=$arrForm.hobby_id item=hobby}-->
+                        <!--{if $hobby != ""}-->
+                            <!--{$arrHobby[$hobby]|h}-->
+                        <!--{/if}-->
+                    <!--{/foreach}-->
+                </td>
+            </tr>
+            <tr>
+                <th>美人</th>
+                <td><!--{$arrBijin[$arrForm.bijin_id]|h}--></td>
+            </tr>
+            <tr>
+                <th>現在結婚していますか？</th>
+                <td><!--{$arrBijin[$arrForm.married_id]|h}--></td>
+            </tr>
+            <tr>
+                <th>会員様画像</th>
+                <td>
+                    <!--{assign var=key value="main_image"}-->
+                    <!--{if $arrForm.arrFile[$key].filepath != ""}-->
+                        <img src="<!--{$arrForm.arrFile[$key].filepath}-->" alt="<!--{$arrForm.name|h}-->" /><br />
                     <!--{/if}-->
-                <!--{/foreach}-->
-            </td>
-        </tr>
-        <tr>
-            <th>美人</th>
-            <td><!--{$arrBijin[$arrForm.bijin_id]|h}--></td>
-        </tr>
-        <tr>
-            <th>現在結婚していますか？</th>
-            <td><!--{$arrBijin[$arrForm.married_id]|h}--></td>
-        </tr>
-        <tr>
-            <th>会員様画像</th>
-            <td>
-                <!--{assign var=key value="main_image"}-->
-                <!--{if $arrForm.arrFile[$key].filepath != ""}-->
-                    <img src="<!--{$arrForm.arrFile[$key].filepath}-->" alt="<!--{$arrForm.name|h}-->" /><br />
-                <!--{/if}-->
-            </td>
-        </tr>
+                </td>
+            </tr>
         </table>
         <div class="btn-area">
             <ul>

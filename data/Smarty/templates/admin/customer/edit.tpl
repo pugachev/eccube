@@ -263,19 +263,19 @@
                 </td>
             </tr>
             <tr>
-            <th>ニックネーム<span class="attention"> *</span></th>
-            <td>
-                <span class="attention"><!--{$arrErr.nick_name}--></span>
-                <input type="text" name="nick_name" value="<!--{$arrForm.nick_name|h}-->" maxlength="<!--{$smarty.const.STEXT_LEN}-->" size="30" class="box30" <!--{if $arrErr.nick_name != ""}--><!--{sfSetErrorStyle}--><!--{/if}--> />
-            </td>
-        </tr>
-        <tr>
+                <th>ニックネーム<span class="attention"> *</span></th>
+                <td>
+                    <span class="attention"><!--{$arrErr.nick_name}--></span>
+                    <input type="text" name="nick_name" value="<!--{$arrForm.nick_name|h}-->" maxlength="<!--{$smarty.const.STEXT_LEN}-->" size="30" class="box30" <!--{if $arrErr.nick_name != ""}--><!--{sfSetErrorStyle}--><!--{/if}--> />
+                </td>
+            </tr>
+            <tr>
                 <th>住まい</th>
                 <td>
                     <span class="attention"><!--{$arrErr.house_id}--></span>
                     <select name="house_id" <!--{if $arrErr.house_id != ""}--><!--{sfSetErrorStyle}--><!--{/if}--> >
-                    <option value="" selected="selected">選択してください</option>
-                    <!--{html_options options=$arrHouse selected=$arrForm.house_id}-->
+                        <option value="" selected="selected">選択してください</option>
+                        <!--{html_options options=$arrHouse selected=$arrForm.house_id}-->
                     </select>
                 </td>
             </tr>

@@ -29,7 +29,13 @@
             <input type="hidden" name="<!--{$smarty.const.TRANSACTION_ID_NAME}-->" value="<!--{$transactionid}-->" />
             <input type="hidden" name="mode" value="complete">
             <!--{foreach from=$arrForm key=key item=item}-->
-                <input type="hidden" name="<!--{$key|h}-->" value="<!--{$item.value|h}-->" />
+                <!--{if $key == 'hobby_id'}-->
+                    <!--{foreach from=$item.value item=hobbyVal}-->
+                        <input type="hidden" name="<!--{$key}-->[]" value="<!--{$hobbyVal|h}-->" />
+                    <!--{/foreach}-->
+                <!--{else}-->
+                    <input type="hidden" name="<!--{$key|h}-->" value="<!--{$item.value|h}-->" />
+                <!--{/if}-->
             <!--{/foreach}-->
 
             <table summary="入力内容確認">

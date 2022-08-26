@@ -239,5 +239,47 @@
                 <!--{/foreach}-->
             </ul>
         </dd>
+        <dt>ニックネーム&nbsp;<span class="attention">※</span></dt>
+        <dd>
+            <!--{assign var=key1 value="`$prefix`nick_name"}-->
+            <!--{if $arrErr[$key1]}-->
+                <div class="attention"><!--{$arrErr[$key1]}--></div>
+            <!--{/if}-->
+            <input type="text" name="<!--{$key1}-->" value="<!--{$arrForm[$key1].value|h}-->" maxlength="<!--{$arrForm[$key1].length}-->" style="<!--{$arrErr[$key1]|sfGetErrorColor}-->" class="boxLong text data-role-none" />
+        </dd>
+        
+        <dt>住まい</dt>
+        <dd>
+            <!--{assign var=key1 value="`$prefix`house_id"}-->
+            <!--{if $arrErr[$key1]}-->
+                <div class="attention"><!--{$arrErr[$key1]}--></div>
+            <!--{/if}-->
+            <select name="<!--{$key1}-->" style="<!--{$arrErr[$key1]|sfGetErrorColor}-->" class="boxLong data-role-none">
+                <option value="">選択してください</option>
+                <!--{html_options options=$arrHouse selected=$arrForm[$key1].value}-->
+            </select>
+        </dd>
+        
+        <dt>ダイレクトメール&nbsp;<span class="attention">※</span></dt>
+        <dd>
+            <!--{assign var=key1 value="`$prefix`dm_id"}-->
+            <!--{if $arrErr[$key1]}-->
+                <div class="attention"><!--{$arrErr[$key1]}--></div>
+            <!--{/if}-->
+            <p style="<!--{$arrErr[$key1]|sfGetErrorColor}-->">
+                <!--{html_radios name=$key1 options=$arrDm selected=$arrForm[$key1].value separator='&nbsp;&nbsp;'}-->
+            </p>
+        </dd>
+        
+        <dt>趣味</dt>
+        <dd>
+            <!--{assign var=key1 value="`$prefix`hobby_id"}-->
+            <!--{if $arrErr[$key1]}-->
+                <div class="attention"><!--{$arrErr[$key1]}--></div>
+            <!--{/if}-->
+            <p style="<!--{$arrErr[$key1]|sfGetErrorColor}-->">
+                <!--{html_checkboxes name=$key1 options=$arrHobby separator="&nbsp;" selected=$arrForm[$key1].value}-->
+            </p>
+        </dd>
     <!--{/if}-->
 <!--{/if}-->

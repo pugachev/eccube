@@ -180,6 +180,41 @@
                     <!--{$arrMAILMAGATYPE[$mailmaga_flg_id]|h}-->
                 </td>
             </tr>
+            <tr>
+                <th>ニックネーム</th>
+                <td>
+                    <!--{assign var=key1 value="`$prefix`nick_name"}-->
+                    <!--{$arrForm[$key1].value|h}-->
+                </td>
+            </tr>
+            <tr>
+                <th>住まい</th>
+                <td>
+                    <!--{assign var=key1 value="`$prefix`house_id"}-->
+                    <!--{assign var="house_id" value=$arrForm[$key1].value}-->
+                    <!--{$arrHouse[$house_id]|default:"未登録"|h}-->
+                </td>
+            </tr>
+            <tr>
+                <th>ダイレクトメールの送付について</th>
+                <td>
+                    <!--{assign var=key1 value="`$prefix`dm_id"}-->
+                    <!--{assign var="dm_id" value=$arrForm[$key1].value}-->
+                    <!--{$arrDm[$dm_id]|h}-->
+                </td>
+            </tr>
+            <tr>
+                <th>趣味</th>
+                <td>
+                    <!--{assign var=key1 value="`$prefix`hobby_id"}-->
+                    <!--{foreach from=$arrForm[$key1].value item=hobby}-->
+                        <!--{if $hobby != ""}-->
+                            <!--{$arrHobby[$hobby]|h}-->&nbsp;&nbsp;
+                        <!--{/if}-->
+                    <!--{/foreach}-->
+                </td>
+            </tr>
+            
         <!--{/if}-->
     <!--{/if}-->
 <!--{/strip}-->

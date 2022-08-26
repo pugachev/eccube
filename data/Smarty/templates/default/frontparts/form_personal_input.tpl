@@ -268,6 +268,53 @@
                     </span>
                 </td>
             </tr>
+            <tr>
+                <th>ニックネーム<span class="attention">※</span></th>
+                <td>
+                    <!--{assign var=key1 value="`$prefix`nick_name"}-->
+                    <!--{if $arrErr[$key1]}-->
+                        <div class="attention"><!--{$arrErr[$key1]}--></div>
+                    <!--{/if}-->
+                    <input type="text" name="<!--{$key1}-->" value="<!--{$arrForm[$key1].value|h}-->" maxlength="<!--{$arrForm[$key1].length}-->" style="<!--{$arrErr[$key1]|sfGetErrorColor}-->; ime-mode: active;" class="box300" />&nbsp;
+                </td>
+            </tr>
+            <tr>
+                <th>住まい</th>
+                <td>
+                    <!--{assign var=key1 value="`$prefix`house_id"}-->
+                    <!--{if $arrErr[$key1]}-->
+                        <div class="attention"><!--{$arrErr[$key1]}--></div>
+                    <!--{/if}-->
+                    <select name="<!--{$key1}-->" style="<!--{$arrErr[$key1]|sfGetErrorColor}-->">
+                        <option value="" selected="selected">選択してください</option>
+                        <!--{html_options options=$arrHouse selected=$arrForm[$key1].value}-->
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>ダイレクトメールの送付について<span class="attention">※</span></th>
+                <td>
+                    <!--{assign var=key1 value="`$prefix`dm_id"}-->
+                    <!--{if $arrErr[$key1]}-->
+                        <div class="attention"><!--{$arrErr[$key1]}--></div>
+                    <!--{/if}-->
+                    <span style="<!--{$arrErr[$key1]|sfGetErrorColor}-->">
+                        <!--{html_radios name=$key1 options=$arrDm selected=$arrForm[$key1].value separator='<br />'}-->
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <th>趣味</th>
+                <td>
+                    <!--{assign var=key1 value="`$prefix`hobby_id"}-->
+                    <!--{if $arrErr[$key1]}-->
+                        <div class="attention"><!--{$arrErr[$key1]}--></div>
+                    <!--{/if}-->
+                    <span style="<!--{$arrErr[$key1]|sfGetErrorColor}-->">
+                        <!--{html_checkboxes name=$key1 options=$arrHobby separator="&nbsp;" selected=$arrForm[$key1].value}-->
+                    </span>
+                </td>
+            </tr>
         <!--{/if}-->
     <!--{/if}-->
 <!--{/strip}-->

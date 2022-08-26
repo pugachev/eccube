@@ -405,6 +405,7 @@ class LC_Page_Admin_Products extends LC_Page_Admin_Ex
                         . 'AND product_id IN ('
                         . '    SELECT product_id FROM dtb_gift WHERE gift_id IN (' . SC_Utils_Ex::repeatStrWithSeparator('?', $count) . ')'
                         . ')';
+                    //mtake add 画面から配列[1,2,3]と来たら、プレイスホルダ(?)に配列[1,2,3]をコピーしてあげる
                     $arrValues = array_merge($arrValues, $arrPartVal);
                 }
                 break;
